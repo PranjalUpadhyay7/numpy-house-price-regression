@@ -25,8 +25,17 @@ def impute_nan_with_mean(X):
     # TODO: Replace every NaN with that column's nan-aware mean...
     # pass
 
-# Step 2 - compute_iqr_bounds (not yet solved)
-# TODO: implement
+# Step 2 - compute_iqr_bounds
+import numpy as np
+def compute_iqr_bounds(X, k=1.5):
+    # TODO: Compute per-column lower/upper clip bounds using the IQR rule.
+    q1= np.percentile(X,25,axis=0)
+    q3= np.percentile(X,75,axis=0)
+    IQR= q3-q1
+    lower= q1-k*IQR
+    upper=q3+ k*IQR
+    return [lower, upper]
+    # pass
 
 # Step 3 - clip_columns (not yet solved)
 # TODO: implement
