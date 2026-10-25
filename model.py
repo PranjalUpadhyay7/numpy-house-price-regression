@@ -79,8 +79,12 @@ def apply_standardizer(X, mean, std):
     # pass
     return (X-mean)/std
 
-# Step 9 - add_bias_column (not yet solved)
-# TODO: implement
+# Step 9 - add_bias_column
+def add_bias_column(X):
+    # TODO: Prepend a column of ones to a 2-D feature matrix X...
+    # pass
+    zero=np.ones([X.shape[0],1])
+    return np.column_stack([zero,X])
 
 # Step 10 - make_shuffled_indices (not yet solved)
 # TODO: implement
