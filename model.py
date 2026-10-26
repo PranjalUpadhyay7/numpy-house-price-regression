@@ -117,8 +117,12 @@ def ols_fit(X, y):
     b=np.matmul(X.T,y)
     return np.linalg.solve(A,b)
 
-# Step 14 - ols_predict (not yet solved)
-# TODO: implement
+# Step 14 - ols_predict
+def ols_predict(X, theta):
+    # TODO: Predict continuous targets with a fitted linear model.
+    # pass
+    if len(X.shape)==2 and X.shape[1]== len(theta):
+        return np.matmul(X,theta)
 
 # Step 15 - mean_absolute_error (not yet solved)
 # TODO: implement
