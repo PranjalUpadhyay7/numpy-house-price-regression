@@ -124,8 +124,11 @@ def ols_predict(X, theta):
     if len(X.shape)==2 and X.shape[1]== len(theta):
         return np.matmul(X,theta)
 
-# Step 15 - mean_absolute_error (not yet solved)
-# TODO: implement
+# Step 15 - mean_absolute_error
+def mean_absolute_error(y_true, y_pred):
+    # TODO: return the mean absolute error between targets and predictions
+    # pass
+    return np.mean(np.abs(y_true-y_pred))
 
 # Step 16 - root_mean_squared_error (not yet solved)
 # TODO: implement
