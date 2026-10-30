@@ -115,7 +115,9 @@ def ols_fit(X, y):
 
     A= np.matmul(X.T,X)
     b=np.matmul(X.T,y)
-    return np.linalg.solve(A,b)
+    theta, _, _, _ = np.linalg.lstsq(X, y, rcond=None)
+    # return np.linalg.solve(A,b)
+    return theta
 
 # Step 14 - ols_predict
 def ols_predict(X, theta):
@@ -233,6 +235,22 @@ def evaluate_predictions(y_true, y_pred):
     residual_sum=residual_summary(y_true,y_pred)
     return {"mae":mae, "rmse":rmse,"r2":r2, "residual_summary":residual_sum}
 
-# Step 24 - house_price_pipeline (not yet solved)
-# TODO: implement
+# Step 24 - house_price_pipeline
+def house_price_pipeline(X, y, ratio_num_idx, ratio_den_idx, cat_labels=None, train_ratio=0.7, val_ratio=0.15, seed=42, iqr_k=1.5):
+    # TODO: Run full clean->featurize->split->standardize->OLS->evaluate pipeline...
+    # pass
+    X_cleaned=prepare_cleaned_features(X,iqr_k=iqr_k)
+    X_features=assemble_feature_matrix(X_cleaned,ratio_den_idx,ratio_den_idx, cat_labels)
+    data_splits=make_train_val_test(X_features, y, train_ratio,val_ratio, seed)
+    data_scaled,mean,std=standardize_and_add_bias(data_splits)
+    theta=ols_fit(data_scaled["X_train"], data_scaled["y_train"])
+    y_pred=ols_predict(data_scaled["X_test"], theta)
+    y_val=ols_predict(data_scaled["X_val"],theta)
+    test_metrics=evaluate_predictions(data_scaled["y_test"],y_pred)
+    val_metrics=evaluate_predictions(data_scaled['y_val'], y_val)
+    return {"theta":theta,
+    "y_test":data_scaled["y_test"],
+    "y_test_pred":y_pred,
+    "test_metrics":test_metrics,
+    "val_metrics":val_metrics}
 
